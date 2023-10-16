@@ -1,4 +1,5 @@
 import { ThemeProvider } from "styled-components";
+import { SeriesProvider } from "./contexts/SeriesContext"; 
 import { Series } from "./pages/Series";
 import { GlobalStyle } from "./styles/global";
 import { defaultTheme } from "./styles/themes/default";
@@ -8,7 +9,9 @@ export function App() {
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
 
-      <Series />
+      <SeriesProvider>
+        <Series />
+      </SeriesProvider>
     </ThemeProvider>
    
   )

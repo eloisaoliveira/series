@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { Header } from "../../components/Header";
 import { SearchForm } from "./components/SearchForm";
 import { SeriesContainer, SeriesTable } from "./styles";
+import { SeriesContext } from "../../contexts/SeriesContext";
+import { dateFormatter } from '../../utils/formatter';
 
 export function Series() {
+  const { series } = useContext(SeriesContext)
   return (
     <div>
       <Header />
@@ -11,21 +15,15 @@ export function Series() {
         <SearchForm />
         <SeriesTable>
           <tbody>
-            <tr>
-              <td width="50%">Supernatural</td>
-              <td>Data lançamento</td>
-              <td>15/09/2005</td>
-            </tr>
-            <tr>
-              <td width="50%">Stranger Things</td>
-              <td>Data lançamento</td>
-              <td>15/07/2016</td>
-            </tr>
-            <tr>
-              <td width="50%">The Blacklist</td>
-              <td>Data lançamento</td>
-              <td>23/09/2013</td>
-            </tr>
+            {series.map(serie => {
+              return (
+                <tr key={serie.idSerie}>
+                  <td width="50%">{serie.nomeSerie}</td>
+                  <td>Data lançamento</td>
+                  <td>{dateFormatter.format(new Date(serie.dataSerie))}</td>
+                </tr>
+              )
+            })}
           </tbody>
         </SeriesTable>
       </SeriesContainer>
