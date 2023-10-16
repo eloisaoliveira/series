@@ -1,32 +1,41 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useContext } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { X } from "phosphor-react";
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import { SeriesContext } from '../../contexts/SeriesContext';
 
 import { CloseButton, Content, Overlay } from './styles';
 
 const newSerieFormSchema = z.object({
-  name: z.string(),
-  date: z.string(),
+  nomeSerie: z.string(),
+  dataSerie: z.string(),
 });
 
 type NewSerieFormInputs = z.infer<typeof newSerieFormSchema>;
 
 export function NewSerieModal() {
+  const { createSerie } = useContext(SeriesContext);
 
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting }
+    formState: { isSubmitting },
+    reset
   } = useForm<NewSerieFormInputs>({
     resolver: zodResolver(newSerieFormSchema),
   })
 
   async function handleCreateNewSerie(data: NewSerieFormInputs) {
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    const { nomeSerie, dataSerie } = data;
 
-    console.log(data);
+    await createSerie({
+      nomeSerie,
+      dataSerie
+    });
+
+    reset();
   }
 
   return (
@@ -45,13 +54,13 @@ export function NewSerieModal() {
             type="text"
             placeholder="Nome da Série"
             required
-            {...register('name')}
+            {...register('nomeSerie')}
           />
           <input
-            type="data"
+            type="date"
             placeholder="Data de lançamento"
             required
-            {...register('date')}
+            {...register('dataSerie')}
           />
 
           <button type="submit" disabled={isSubmitting}>
