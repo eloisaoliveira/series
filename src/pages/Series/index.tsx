@@ -1,4 +1,5 @@
 import { Header } from "../../components/Header";
+import { SearchForm } from "./components/SearchForm";
 import { SeriesContainer, SeriesTable } from "./styles";
 
 export function Series() {
@@ -7,6 +8,7 @@ export function Series() {
       <Header />
 
       <SeriesContainer>
+        <SearchForm />
         <SeriesTable>
           <tbody>
             <tr>
