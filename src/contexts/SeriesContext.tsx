@@ -16,6 +16,7 @@ interface SerieContextType {
   series: Serie[];
   fetchSeries: (query?: string) => Promise<void>;
   createSerie: (data: CreateSerieInput) => Promise<void>;
+  deletSerie: (id: number) => Promise<void>;
 }
 
 interface SeriesProviderProps {
@@ -48,6 +49,14 @@ export function SeriesProvider({ children }: SeriesProviderProps) {
     setSeries(state => [response.data, ...state])
   }
 
+  async function deletSerie(id: number) {
+    await api.delete(`series/${id}`);
+
+    const novaListagem = series.filter(serie => serie.idSerie !== id);
+
+    setSeries(novaListagem);
+  }
+
   useEffect(() => {
     fetchSeries()
   }, []);
@@ -56,7 +65,8 @@ export function SeriesProvider({ children }: SeriesProviderProps) {
     <SeriesContext.Provider value={{
       series,
       fetchSeries,
-      createSerie
+      createSerie,
+      deletSerie,
     }}>
       {children}
     </SeriesContext.Provider>
