@@ -13,7 +13,7 @@ const searchFormSchema = z.object({
 type SearchFormInputs = z.infer<typeof searchFormSchema>;
 
 export function SearchForm() {
-  const { fetchSeries } = useContext(SeriesContext);
+  const { searchSerieByName } = useContext(SeriesContext);
   const {
     register,
     handleSubmit,
@@ -23,7 +23,7 @@ export function SearchForm() {
   });
 
   async function handleSearchSeries(data: SearchFormInputs) {
-    await fetchSeries(data.query)
+    await searchSerieByName(data.query)
 
     console.log(data);
   }

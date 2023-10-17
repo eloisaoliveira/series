@@ -17,6 +17,7 @@ interface SerieContextType {
   fetchSeries: (query?: string) => Promise<void>;
   createSerie: (data: CreateSerieInput) => Promise<void>;
   deletSerie: (id: number) => Promise<void>;
+  searchSerieByName: (query?: string) => Promise<void>;
 }
 
 interface SeriesProviderProps {
@@ -57,6 +58,16 @@ export function SeriesProvider({ children }: SeriesProviderProps) {
     setSeries(novaListagem);
   }
 
+  async function searchSerieByName(query?: string) {
+    const response = await api.get('/series', {
+      params: {
+        nomeBusca: query,
+      }
+    })
+    
+    setSeries(response.data)
+  }
+
   useEffect(() => {
     fetchSeries()
   }, []);
@@ -67,6 +78,7 @@ export function SeriesProvider({ children }: SeriesProviderProps) {
       fetchSeries,
       createSerie,
       deletSerie,
+      searchSerieByName,
     }}>
       {children}
     </SeriesContext.Provider>
