@@ -1,7 +1,7 @@
 <h1 align="center"> Lista de Séries </h1>
 
 <p align="center">
-  <img alt="projeto Lista de Séries" src=".github/preview.jpg" width="100%">
+  <img alt="projeto Lista de Séries" src=".github/preview.png" width="100%">
 </p>
 
 ## 🚀 Tecnologias
